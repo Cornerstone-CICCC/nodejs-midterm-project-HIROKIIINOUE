@@ -34,14 +34,14 @@ class UserModel {
   async checkAuth(username: string, password: string) {
     const target = this.users.find((user) => user.username === username);
     if (!target) {
-      return false;
+      return null;
     }
     const isPasswordCorrect = await bcrypt.compare(password, target.password);
     if (!isPasswordCorrect) {
-      return false;
+      return null;
     }
 
-    return true;
+    return target;
   }
 
   logout(username: string) {

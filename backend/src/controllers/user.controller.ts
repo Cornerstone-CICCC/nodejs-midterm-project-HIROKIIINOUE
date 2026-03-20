@@ -22,16 +22,16 @@ const addUser = async (
 
 const login = async (req: Request<{}, {}, Omit<User, "id">>, res: Response) => {
   const { username, password } = req.body;
-  const isAuth: boolean = await userModels.checkAuth(username, password);
-  if (!isAuth) {
+  const user: User | null = await userModels.checkAuth(username, password);
+  if (!user) {
     res.status(400).json({ error: "Username or password is wrong" });
     return;
   }
-  res.cookie("isLoggedIn", true, {
+  res.cookie("loginUser", user.username, {
     maxAge: 2 * 60 * 1000,
     httpOnly: true,
   });
-  res.status(200).json({ message: `${username} is successfully logged in!` });
+  res.status(200).json(user);
 };
 
 const logout = async (

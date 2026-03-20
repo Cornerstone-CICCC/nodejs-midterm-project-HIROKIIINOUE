@@ -28,16 +28,16 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
-    const isAuth = yield user_models_1.default.checkAuth(username, password);
-    if (!isAuth) {
+    const user = yield user_models_1.default.checkAuth(username, password);
+    if (!user) {
         res.status(400).json({ error: "Username or password is wrong" });
         return;
     }
-    res.cookie("isLoggedIn", true, {
+    res.cookie("loginUser", user.username, {
         maxAge: 2 * 60 * 1000,
         httpOnly: true,
     });
-    res.status(200).json({ message: `${username} is successfully logged in!` });
+    res.status(200).json(user);
 });
 const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username } = req.body;

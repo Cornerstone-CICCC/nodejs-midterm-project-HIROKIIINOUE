@@ -47,13 +47,13 @@ class UserModel {
         return __awaiter(this, void 0, void 0, function* () {
             const target = this.users.find((user) => user.username === username);
             if (!target) {
-                return false;
+                return null;
             }
             const isPasswordCorrect = yield bcrypt_1.default.compare(password, target.password);
             if (!isPasswordCorrect) {
-                return false;
+                return null;
             }
-            return true;
+            return target;
         });
     }
     logout(username) {
