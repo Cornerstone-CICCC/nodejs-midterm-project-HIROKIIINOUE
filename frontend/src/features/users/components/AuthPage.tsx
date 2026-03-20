@@ -1,10 +1,16 @@
-import React from 'react'
+import { useState } from 'react'
 import { SignupFrom } from './SignupForm'
+import { LoginForm } from './LoginForm'
 
 export const AuthPage = () => {
+  const [isSignUp, setIsSignUp] = useState(false)
   return (
     <>
-      <SignupFrom />
+      {isSignUp ? (
+        <SignupFrom setIsSignUp={setIsSignUp} />
+      ) : (
+        <LoginForm setIsSignUp={setIsSignUp} />
+      )}
     </>
   )
 }

@@ -4,18 +4,19 @@ type Props = {
   setIsSignUp: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const SignupFrom = (props: Props) => {
-  const { setIsSignUp } = props
+export const LoginForm = (props: Props) => {
+  const { setIsSignUp } = props;
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("")
-  const handleSignup = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault()
-    const res = await fetch("http://localhost:3000/user/signup", {
+
+  const handleSignin = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    const res = await fetch("http://localhost:3000/user/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json"
       },
-      credentials: "include",
+      credentials: 'include',
       body: JSON.stringify({
         username,
         password
@@ -26,20 +27,18 @@ export const SignupFrom = (props: Props) => {
       alert(data.error)
       return
     }
-    alert("You successfully signed up")
-    setIsSignUp(false)
+    console.log(data)
   }
-
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-10">
       <section className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/70">
         <div className="mb-8 space-y-2 text-center">
           <p className="text-sm font-medium uppercase tracking-[0.3em] text-teal-700">
-            Account Setup
+            Welcome Back
           </p>
-          <h1 className="text-3xl font-semibold text-slate-900">Create your account</h1>
+          <h1 className="text-3xl font-semibold text-slate-900">Log in to continue</h1>
           <p className="text-sm text-slate-500">
-            Choose a username and password to get started.
+            Enter your account details to access your dashboard.
           </p>
         </div>
 
@@ -71,20 +70,20 @@ export const SignupFrom = (props: Props) => {
           <button
             className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-200"
             type='submit'
-            onClick={(e) => handleSignup(e)}
+            onClick={(e) => handleSignin(e)}
           >
-            Create Account
+            Login
           </button>
         </form>
 
         <div className="mt-6 text-center text-sm text-slate-500">
-          Already have an account?{" "}
+          New here?{" "}
           <button
             className="font-semibold text-teal-700 transition hover:text-teal-600"
             type='button'
-            onClick={() => setIsSignUp(false)}
+            onClick={() => setIsSignUp(true)}
           >
-            Login here
+            Signup here
           </button>
         </div>
       </section>
