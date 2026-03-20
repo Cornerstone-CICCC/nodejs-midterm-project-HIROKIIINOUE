@@ -44,7 +44,7 @@ const logout = async (
     res.status(400).json({ error: "User is not found" });
     return;
   }
-  res.clearCookie("isLoggedIn");
+  res.clearCookie("loginUser");
   res.status(200).json({ message: `${username} is successfully logged out!` });
 };
 
