@@ -27,7 +27,6 @@ export const LoginForm = (props: Props) => {
       alert(data.error)
       return
     }
-    localStorage.setItem("isAuth", "true")
     window.location.href = "";
   }
   return (

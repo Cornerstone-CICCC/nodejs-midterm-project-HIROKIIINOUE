@@ -12,12 +12,16 @@ const addUser = async (
   res: Response,
 ) => {
   const { username, password } = req.body;
-  const newUser: User | null = await userModels.addUser(username, password);
-  if (!newUser) {
+  const user: User | null = await userModels.addUser(username, password);
+  if (!user) {
     res.status(400).json({ error: "User is taken already" });
     return;
   }
-  res.status(200).json(newUser);
+  const userWithoutPass: Omit<User, "password"> = {
+    id: user.id,
+    username: user.username,
+  };
+  res.status(200).json(userWithoutPass);
 };
 
 const login = async (req: Request<{}, {}, Omit<User, "id">>, res: Response) => {
@@ -31,14 +35,18 @@ const login = async (req: Request<{}, {}, Omit<User, "id">>, res: Response) => {
     maxAge: 2 * 60 * 1000,
     httpOnly: true,
   });
-  res.status(200).json(user);
+  const userWithoutPass: Omit<User, "password"> = {
+    id: user.id,
+    username: user.username,
+  };
+  res.status(200).json(userWithoutPass);
 };
 
 const checkAuth = (req: Request, res: Response) => {
   const { loginUser } = req.cookies;
   const user = userModels.checkAuth(loginUser);
   if (!user) {
-    res.status(400).json({ error: "You are not authorized" });
+    res.status(401).json({ error: "You are not authorized" });
     return;
   }
   res.status(200).json(user.username);
@@ -60,12 +68,16 @@ const logout = async (
 
 const deleteUser = (req: Request<{ id: string }>, res: Response) => {
   const { id } = req.params;
-  const target: User | null = userModels.deleteUser(id);
-  if (!target) {
+  const user: User | null = userModels.deleteUser(id);
+  if (!user) {
     res.status(400).json({ error: "User is not found" });
     return;
   }
-  res.status(200).json({ target });
+  const userWithoutPass: Omit<User, "password"> = {
+    id: user.id,
+    username: user.username,
+  };
+  res.status(200).json(userWithoutPass);
 };
 
 export default {

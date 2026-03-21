@@ -19,12 +19,16 @@ const getAllUsers = (req, res) => {
 };
 const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
-    const newUser = yield user_models_1.default.addUser(username, password);
-    if (!newUser) {
+    const user = yield user_models_1.default.addUser(username, password);
+    if (!user) {
         res.status(400).json({ error: "User is taken already" });
         return;
     }
-    res.status(200).json(newUser);
+    const userWithoutPass = {
+        id: user.id,
+        username: user.username,
+    };
+    res.status(200).json(userWithoutPass);
 });
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
@@ -37,13 +41,17 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         maxAge: 2 * 60 * 1000,
         httpOnly: true,
     });
-    res.status(200).json(user);
+    const userWithoutPass = {
+        id: user.id,
+        username: user.username,
+    };
+    res.status(200).json(userWithoutPass);
 });
 const checkAuth = (req, res) => {
     const { loginUser } = req.cookies;
     const user = user_models_1.default.checkAuth(loginUser);
     if (!user) {
-        res.status(400).json({ error: "You are not authorized" });
+        res.status(401).json({ error: "You are not authorized" });
         return;
     }
     res.status(200).json(user.username);
@@ -60,12 +68,16 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const deleteUser = (req, res) => {
     const { id } = req.params;
-    const target = user_models_1.default.deleteUser(id);
-    if (!target) {
+    const user = user_models_1.default.deleteUser(id);
+    if (!user) {
         res.status(400).json({ error: "User is not found" });
         return;
     }
-    res.status(200).json({ target });
+    const userWithoutPass = {
+        id: user.id,
+        username: user.username,
+    };
+    res.status(200).json(userWithoutPass);
 };
 exports.default = {
     getAllUsers,

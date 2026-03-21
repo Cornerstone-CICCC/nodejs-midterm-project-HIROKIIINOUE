@@ -2,33 +2,40 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { AuthPage } from './features/users/components'
+import { Loading } from './components/layouts'
 
 function App() {
-  const initialAuthValue: boolean = localStorage.getItem("isAuth") === "true" ? true : false
-  const [isAuth, setIsAuth] = useState<boolean>(initialAuthValue)
   const [username, setUsername] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    if (!isAuth) return
     const authCheck = async () => {
-      const res = await fetch("http://localhost:3000/user/checkAuth", {
-        credentials: "include"
-      })
+      try {
 
-      if (!res.ok) {
-        setIsAuth(false)
-        setUsername(null)
-        return
+        setIsLoading(true)
+        const res = await fetch("http://localhost:3000/user/checkAuth", {
+          credentials: "include"
+        })
+        if (!res.ok) {
+          setUsername(null)
+          return
+        }
+        const data = await res.json()
+        setUsername(data)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setIsLoading(false)
       }
-      const data = await res.json()
-      setIsAuth(true)
-      setUsername(data)
     }
     authCheck()
+  }, [])
 
-  }, [isAuth])
+  if (isLoading) {
+    return <Loading />
+  }
 
-  if (!isAuth) {
+  if (!username) {
     return <AuthPage />
   }
 
