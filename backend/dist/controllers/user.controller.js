@@ -28,7 +28,7 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
-    const user = yield user_models_1.default.checkAuth(username, password);
+    const user = yield user_models_1.default.login(username, password);
     if (!user) {
         res.status(400).json({ error: "Username or password is wrong" });
         return;
@@ -39,6 +39,15 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
     res.status(200).json(user);
 });
+const checkAuth = (req, res) => {
+    const { loginUser } = req.cookies;
+    const user = user_models_1.default.checkAuth(loginUser);
+    if (!user) {
+        res.status(400).json({ error: "You are not authorized" });
+        return;
+    }
+    res.status(200).json(user.username);
+};
 const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username } = req.body;
     const target = user_models_1.default.logout(username);
@@ -46,7 +55,7 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(400).json({ error: "User is not found" });
         return;
     }
-    res.clearCookie("isLoggedIn");
+    res.clearCookie("loginUser");
     res.status(200).json({ message: `${username} is successfully logged out!` });
 });
 const deleteUser = (req, res) => {
@@ -64,4 +73,5 @@ exports.default = {
     login,
     deleteUser,
     logout,
+    checkAuth,
 };

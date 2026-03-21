@@ -43,7 +43,7 @@ class UserModel {
             return newUser;
         });
     }
-    checkAuth(username, password) {
+    login(username, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const target = this.users.find((user) => user.username === username);
             if (!target) {
@@ -55,6 +55,13 @@ class UserModel {
             }
             return target;
         });
+    }
+    checkAuth(username) {
+        const target = this.users.find((user) => user.username === username);
+        if (!target) {
+            return null;
+        }
+        return target;
     }
     logout(username) {
         const target = this.users.find((user) => user.username === username);

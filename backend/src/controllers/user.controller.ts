@@ -22,7 +22,7 @@ const addUser = async (
 
 const login = async (req: Request<{}, {}, Omit<User, "id">>, res: Response) => {
   const { username, password } = req.body;
-  const user: User | null = await userModels.checkAuth(username, password);
+  const user: User | null = await userModels.login(username, password);
   if (!user) {
     res.status(400).json({ error: "Username or password is wrong" });
     return;
@@ -32,6 +32,16 @@ const login = async (req: Request<{}, {}, Omit<User, "id">>, res: Response) => {
     httpOnly: true,
   });
   res.status(200).json(user);
+};
+
+const checkAuth = (req: Request, res: Response) => {
+  const { loginUser } = req.cookies;
+  const user = userModels.checkAuth(loginUser);
+  if (!user) {
+    res.status(400).json({ error: "You are not authorized" });
+    return;
+  }
+  res.status(200).json(user.username);
 };
 
 const logout = async (
@@ -64,4 +74,5 @@ export default {
   login,
   deleteUser,
   logout,
+  checkAuth,
 };

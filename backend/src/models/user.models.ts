@@ -31,7 +31,7 @@ class UserModel {
     return newUser;
   }
 
-  async checkAuth(username: string, password: string) {
+  async login(username: string, password: string) {
     const target = this.users.find((user) => user.username === username);
     if (!target) {
       return null;
@@ -41,6 +41,14 @@ class UserModel {
       return null;
     }
 
+    return target;
+  }
+
+  checkAuth(username: string) {
+    const target = this.users.find((user) => user.username === username);
+    if (!target) {
+      return null;
+    }
     return target;
   }
 

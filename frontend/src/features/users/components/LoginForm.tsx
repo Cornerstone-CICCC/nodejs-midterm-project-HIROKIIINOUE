@@ -27,7 +27,8 @@ export const LoginForm = (props: Props) => {
       alert(data.error)
       return
     }
-    console.log(data)
+    localStorage.setItem("isAuth", "true")
+    window.location.href = "";
   }
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-10">
