@@ -9,10 +9,12 @@ type Props = {
   dummyData: ShoppingItemType[]
   selectedMenu: string,
   setSelectedMenu: React.Dispatch<React.SetStateAction<string>>
+  setIsAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const FunctionButtons = (props: Props) => {
-  const { dummyData, selectedMenu, setSelectedMenu } = props
+  const { dummyData, selectedMenu, setSelectedMenu, setIsAddModalOpen } = props
+
 
   return (
     <section className="px-4 py-4 sm:px-6">
@@ -21,6 +23,7 @@ export const FunctionButtons = (props: Props) => {
           <div className="grid grid-cols-2 gap-3 sm:contents">
             <Button
               variant="contained"
+              onClick={() => setIsAddModalOpen(true)}
               endIcon={<AddCircleOutlineIcon />}
               sx={{
                 borderRadius: '16px',

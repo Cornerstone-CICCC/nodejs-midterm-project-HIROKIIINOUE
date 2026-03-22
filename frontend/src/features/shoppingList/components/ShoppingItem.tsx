@@ -8,10 +8,11 @@ import type { ShoppingItemType } from '../../../types/shoppingItem.types'
 
 type Props = {
   item: ShoppingItemType
+  openUpdateModal: (isItem: boolean, targetItem: ShoppingItemType) => void
 }
 
 export const ShoppingItem = (props: Props) => {
-  const { item } = props
+  const { item, openUpdateModal } = props
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const isMenuOpen = Boolean(anchorEl)
 
@@ -20,6 +21,11 @@ export const ShoppingItem = (props: Props) => {
   }
 
   const handleCloseMenu = () => {
+    setAnchorEl(null)
+  }
+
+  const handleInputModalOpen = () => {
+    openUpdateModal(true, item)
     setAnchorEl(null)
   }
 
@@ -86,6 +92,7 @@ export const ShoppingItem = (props: Props) => {
         <div className="hidden items-center gap-1 sm:flex">
           <button
             type="button"
+            onClick={() => openUpdateModal(true, item)}
             className={`rounded-xl p-2 transition ${item.isCompleted
               ? 'hover:bg-slate-300 hover:text-slate-500'
               : 'hover:bg-slate-200 hover:text-slate-700'
@@ -143,7 +150,7 @@ export const ShoppingItem = (props: Props) => {
               },
             }}
           >
-            <MenuItem onClick={handleCloseMenu} sx={{ gap: 1.25, color: '#334155' }}>
+            <MenuItem onClick={handleInputModalOpen} sx={{ gap: 1.25, color: '#334155' }}>
               <EditIcon fontSize="small" />
               Edit
             </MenuItem>
