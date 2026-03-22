@@ -3,4 +3,5 @@ export interface ShoppingItemType {
   name: string;
   neededFor: string[];
   isFood: boolean;
+  isCompleted: boolean;
 }
