@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { AuthPage } from './features/users/components'
 import { Header, Loading } from './components/layouts'
+import { Container } from './features/shoppingList'
 
 function App() {
   const [username, setUsername] = useState<string | null>(null)
@@ -42,7 +43,7 @@ function App() {
   return (
     <>
       <Header username={username} />
-
+      <Container />
     </>
   )
 }
