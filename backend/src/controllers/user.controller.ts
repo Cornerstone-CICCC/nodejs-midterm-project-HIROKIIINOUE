@@ -32,7 +32,7 @@ const login = async (req: Request<{}, {}, Omit<User, "id">>, res: Response) => {
     return;
   }
   res.cookie("loginUser", user.username, {
-    maxAge: 2 * 60 * 1000,
+    maxAge: 4 * 60 * 60 * 1000,
     httpOnly: true,
   });
   const userWithoutPass: Omit<User, "password"> = {
