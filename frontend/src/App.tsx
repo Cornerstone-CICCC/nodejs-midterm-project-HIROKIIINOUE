@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { AuthPage } from './features/users/components'
-import { Loading } from './components/layouts'
+import { Header, Loading } from './components/layouts'
 
 function App() {
   const [username, setUsername] = useState<string | null>(null)
@@ -41,7 +41,8 @@ function App() {
 
   return (
     <>
-      ddddd{username}
+      <Header username={username} />
+
     </>
   )
 }
