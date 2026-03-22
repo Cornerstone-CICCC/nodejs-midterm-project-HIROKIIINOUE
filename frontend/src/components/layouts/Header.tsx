@@ -5,6 +5,25 @@ type Props = {
 export const Header = (props: Props) => {
   const { username } = props;
 
+  const handleLogout = async () => {
+    if (!confirm("Are you sure to logout??")) return;
+    const res = await fetch("http://localhost:3000/user/logout", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({ username })
+    })
+    const data = await res.json()
+    if (!res.ok) {
+      alert("Something went wrong")
+      return
+    }
+    alert(`${data.message}`)
+    window.location.href = "";
+  }
+
   return (
     <header className="border-b border-slate-200 px-4 py-4 backdrop-blur sm:px-6">
       <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 rounded-3xl border border-slate-200 bg-white px-4 py-4 shadow-sm sm:px-6 sm:py-5 md:grid-cols-[1fr_auto_1fr] md:items-center">
@@ -30,6 +49,7 @@ export const Header = (props: Props) => {
           <button
             type="button"
             className="rounded-xl border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200 focus:outline-none focus:ring-4 focus:ring-slate-200 md:hidden"
+            onClick={handleLogout}
           >
             Logout
           </button>
