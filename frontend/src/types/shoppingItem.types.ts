@@ -1,4 +1,4 @@
-export interface ShoppingItem {
+export interface ShoppingItemType {
   id: string;
   name: string;
   neededFor: string[];

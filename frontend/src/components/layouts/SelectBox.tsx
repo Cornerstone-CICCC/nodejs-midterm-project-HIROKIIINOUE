@@ -1,9 +1,9 @@
 import { FormControl, FormHelperText, InputLabel, MenuItem, Select, type SelectChangeEvent } from '@mui/material'
 import React from 'react'
-import type { ShoppingItem } from '../../types/shoppingItem.types'
+import type { ShoppingItemType } from '../../types/shoppingItem.types'
 
 type Props = {
-  dummyData: ShoppingItem[]
+  dummyData: ShoppingItemType[]
   selectedMenu: string,
   setSelectedMenu: React.Dispatch<React.SetStateAction<string>>
 }

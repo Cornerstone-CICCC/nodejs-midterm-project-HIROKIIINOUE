@@ -3,10 +3,10 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import React from 'react'
 import { SelectBox } from '../../../components';
-import type { ShoppingItem } from '../../../types/shoppingItem.types';
+import type { ShoppingItemType } from '../../../types/shoppingItem.types';
 
 type Props = {
-  dummyData: ShoppingItem[]
+  dummyData: ShoppingItemType[]
   selectedMenu: string,
   setSelectedMenu: React.Dispatch<React.SetStateAction<string>>
 }
