@@ -15,19 +15,25 @@ export const SelectBox = (props: Props) => {
   shoppingItems.forEach(element => {
     if (!element.isFood) return
     if (element.neededFor.length === 1) {
+      if (element.neededFor[0] === "" || element.neededFor[0] === undefined) return
       return menuList.push(element.neededFor[0])
     } else if (element.neededFor.length > 1) {
       element.neededFor.forEach(menu => {
-        menuList.push(menu)
+        if (menu !== "" && menu !== undefined) {
+          menuList.push(menu)
+        }
       })
     }
     return;
   })
   const uniqueMenuList = menuList.filter((item, index) => menuList.indexOf(item) === index)
 
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setSelectedMenu(event.target.value);
+  const handleChange = (e: SelectChangeEvent) => {
+    if (e.target.value === "All") {
+      setSelectedMenu("")
+      return
+    }
+    setSelectedMenu(e.target.value);
   };
 
   return (
@@ -78,6 +84,7 @@ export const SelectBox = (props: Props) => {
           label="Menu"
           onChange={handleChange}
         >
+          <MenuItem value="All">All</MenuItem>
           {uniqueMenuList.map(menu => (
             <MenuItem value={menu}>{menu}</MenuItem>
           ))}

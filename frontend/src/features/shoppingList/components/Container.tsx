@@ -7,9 +7,9 @@ import { InputModal } from '../../../components'
 import { useShoppingItem } from '../../../hooks/useShoppingItem'
 
 export const Container = () => {
-  const { shoppingItems } = useShoppingItem()
 
   const [selectedMenu, setSelectedMenu] = useState<string>("");
+  const { shoppingItems, filteredShoppingItems } = useShoppingItem(selectedMenu)
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
   const [updatingItem, setUpdatingItem] = useState<ShoppingItemType | undefined>(undefined)
@@ -22,7 +22,7 @@ export const Container = () => {
   return (
     <main>
       <FunctionButtons shoppingItems={shoppingItems} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} setIsAddModalOpen={setIsAddModalOpen} />
-      <ShoppingList shoppingItems={shoppingItems} selectedMenu={selectedMenu} openUpdateModal={openUpdateModal} />
+      <ShoppingList shoppingItems={filteredShoppingItems} selectedMenu={selectedMenu} openUpdateModal={openUpdateModal} />
       <Button variant="contained">Contained</Button>
       {isAddModalOpen && <InputModal crud="add" onClose={setIsAddModalOpen} />}
       {isUpdateModalOpen && <InputModal crud="update" targetItem={updatingItem} onClose={setIsUpdateModalOpen} />}
