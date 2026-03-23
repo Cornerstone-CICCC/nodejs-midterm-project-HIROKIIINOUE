@@ -1,5 +1,5 @@
 import { Button, Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import type { ShoppingItemType } from '../../types/shoppingItem.types'
 
 type Props = {
@@ -10,6 +10,57 @@ type Props = {
 
 export const InputModal = (props: Props) => {
   const { crud, targetItem, onClose } = props
+  const [name, setName] = useState<string>(crud === "add" ? "" : `${targetItem?.name}`)
+  const [neededFor1, setNeededFor1] = useState<string>(crud === "add" ? "" : `${targetItem?.neededFor[0]}`)
+  const [neededFor2, setNeededFor2] = useState<string>(crud === "add" ? "" : `${targetItem?.neededFor[1]}`)
+  const [neededFor3, setNeededFor3] = useState<string>(crud === "add" ? "" : `${targetItem?.neededFor[2]}`)
+  const [isFood, setIsFood] = useState<boolean>(crud === "add" ? true : targetItem ? targetItem.isFood : true)
+
+  const handleSubmit = async () => {
+    try {
+      if (crud === "add") {
+        const res = await fetch("http://localhost:3000/item", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            neededFor: [neededFor1, neededFor2, neededFor3],
+            isFood
+          })
+        })
+        const data = await res.json()
+        if (!res.ok) {
+          alert(`${data.error}`)
+        }
+        window.location.href = ""
+
+        return data
+      } else if (crud === "update") {
+        const res = await fetch(`http://localhost:3000/item/${targetItem?.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            neededFor: [neededFor1, neededFor2, neededFor3],
+            isFood
+          })
+        })
+        const data = await res.json()
+        if (!res.ok) {
+          alert(`${data.error}`)
+        }
+        window.location.href = ""
+        return data
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/45 px-4 py-6" onClick={() => onClose(false)}>
@@ -25,7 +76,8 @@ export const InputModal = (props: Props) => {
             id="outlined-basic"
             label="Name"
             variant="outlined"
-            value={crud === "add" ? "" : `${targetItem?.name}`}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             fullWidth
             size="small"
             sx={{
@@ -39,7 +91,8 @@ export const InputModal = (props: Props) => {
             id="outlined-basic"
             label="Needed for..."
             variant="outlined"
-            value={crud === "add" ? "" : `${targetItem?.neededFor[0] ?? ""}`}
+            value={neededFor1}
+            onChange={(e) => setNeededFor1(e.target.value)}
             fullWidth
             size="small"
             sx={{
@@ -53,7 +106,8 @@ export const InputModal = (props: Props) => {
             id="outlined-basic"
             label="Needed for..."
             variant="outlined"
-            value={crud === "add" ? "" : `${targetItem?.neededFor[1] ?? ""}`}
+            value={neededFor2}
+            onChange={(e) => setNeededFor2(e.target.value)}
             fullWidth
             size="small"
             sx={{
@@ -67,7 +121,8 @@ export const InputModal = (props: Props) => {
             id="outlined-basic"
             label="Needed for..."
             variant="outlined"
-            value={crud === "add" ? "" : `${targetItem?.neededFor[2] ?? ""}`}
+            value={neededFor3}
+            onChange={(e) => setNeededFor3(e.target.value)}
             fullWidth
             size="small"
             sx={{
@@ -81,6 +136,7 @@ export const InputModal = (props: Props) => {
             control={
               <Checkbox
                 defaultChecked
+                onChange={(e) => setIsFood(e.target.checked)}
                 sx={{
                   color: '#94a3b8',
                   '&.Mui-checked': {
@@ -108,6 +164,7 @@ export const InputModal = (props: Props) => {
 
         <div className="mt-6 flex justify-end">
           <Button
+            onClick={handleSubmit}
             variant="contained"
             sx={{
               minWidth: 132,

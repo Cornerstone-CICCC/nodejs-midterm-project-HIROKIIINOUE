@@ -16,6 +16,7 @@ app.use(
 const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cookieParser());
+// app.use(express.urlencoded({ extended: true }));
 
 app.use("/user", userRouter);
 app.use("/item", itemRouter);

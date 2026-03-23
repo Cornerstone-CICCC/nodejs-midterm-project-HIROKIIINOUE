@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import MenuIcon from '@mui/icons-material/Menu';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import type { ShoppingItemType } from '../../../types/shoppingItem.types'
+import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   item: ShoppingItemType
@@ -55,7 +56,7 @@ export const ShoppingItem = (props: Props) => {
           {item.neededFor.length > 0 ? (
             item.neededFor.map((menu) => (
               <span
-                key={menu}
+                key={uuidv4()}
                 className={`truncate rounded-full px-2.5 py-1 text-xs font-semibold ${item.isCompleted
                   ? 'bg-slate-200 text-slate-400'
                   : 'bg-teal-50 text-teal-700'
