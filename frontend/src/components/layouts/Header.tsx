@@ -59,6 +59,7 @@ export const Header = (props: Props) => {
           <button
             type="button"
             className="rounded-xl border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200 focus:outline-none focus:ring-4 focus:ring-slate-200"
+            onClick={handleLogout}
           >
             Logout
           </button>
