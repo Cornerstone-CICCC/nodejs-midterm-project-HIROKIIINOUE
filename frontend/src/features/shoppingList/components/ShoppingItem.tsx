@@ -46,7 +46,21 @@ export const ShoppingItem = (props: Props) => {
     } catch (error) {
       console.error(error)
     }
+  }
 
+  const handleToggle = async () => {
+    try {
+      const res = await fetch(`http://localhost:3000/item/${item.id}/toggle`, {
+        method: "PATCH"
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        alert(data.error)
+      }
+      window.location.href = "/"
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -100,6 +114,7 @@ export const ShoppingItem = (props: Props) => {
       <div className={`flex shrink-0 items-center gap-1 ${item.isCompleted ? 'text-slate-400' : 'text-slate-500'}`}>
         <button
           type="button"
+          onClick={handleToggle}
           className={`rounded-xl p-2 transition ${item.isCompleted
             ? 'hover:bg-slate-300 hover:text-slate-500'
             : 'hover:bg-emerald-50 hover:text-emerald-600'
