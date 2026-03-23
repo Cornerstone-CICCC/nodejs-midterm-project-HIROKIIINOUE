@@ -13,7 +13,7 @@ export const ShoppingList = (props: Props) => {
 
   return (
     <section className="px-4 pb-6 sm:px-6">
-      <div className="space-y-3 p-4 sm:p-6">
+      <div className="mx-auto w-full max-w-6xl space-y-3 p-4 sm:p-6">
         {dummyData.map(item => (
           <ShoppingItem key={item.id} item={item} openUpdateModal={openUpdateModal} />
         ))}

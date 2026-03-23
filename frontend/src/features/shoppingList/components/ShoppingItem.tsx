@@ -31,7 +31,7 @@ export const ShoppingItem = (props: Props) => {
 
   return (
     <article
-      className={`flex items-center justify-between gap-3 rounded-2xl border px-3 py-3 transition sm:px-4 ${item.isCompleted
+      className={`flex w-full items-center justify-between gap-3 rounded-2xl border px-3 py-3 transition sm:px-4 ${item.isCompleted
         ? 'border-slate-200 bg-slate-100/80 text-slate-400 opacity-45 grayscale'
         : 'border-slate-200 bg-slate-50 hover:border-slate-300 hover:bg-white'
         }`}
