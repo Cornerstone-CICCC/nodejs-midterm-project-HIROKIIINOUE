@@ -6,10 +6,12 @@ type Props = {
   crud: "add" | "update"
   targetItem?: ShoppingItemType
   onClose: React.Dispatch<React.SetStateAction<boolean>>
+  setShoppingList: React.Dispatch<React.SetStateAction<ShoppingItemType[]>>
+  shoppingList: ShoppingItemType[]
 }
 
 export const InputModal = (props: Props) => {
-  const { crud, targetItem, onClose } = props
+  const { crud, targetItem, onClose, shoppingList, setShoppingList } = props
   const [name, setName] = useState<string>(crud === "add" ? "" : `${targetItem?.name}`)
   const [neededFor1, setNeededFor1] = useState<string>(crud === "add" ? "" : `${targetItem?.neededFor[0]}`)
   const [neededFor2, setNeededFor2] = useState<string>(crud === "add" ? "" : `${targetItem?.neededFor[1]}`)
@@ -34,9 +36,10 @@ export const InputModal = (props: Props) => {
         if (!res.ok) {
           alert(`${data.error}`)
         }
-        window.location.href = ""
-
-        return data
+        const listExceptTarget = shoppingList.filter(element => element.id !== targetItem?.id)
+        const newList = [...listExceptTarget, data]
+        setShoppingList(newList)
+        return
       } else if (crud === "update") {
         const res = await fetch(`http://localhost:3000/item/${targetItem?.id}`, {
           method: "PUT",
@@ -53,8 +56,10 @@ export const InputModal = (props: Props) => {
         if (!res.ok) {
           alert(`${data.error}`)
         }
-        window.location.href = ""
-        return data
+        const listExceptTarget = shoppingList.filter(element => element.id !== targetItem?.id)
+        const newList = [...listExceptTarget, data]
+        setShoppingList(newList)
+        return
       }
 
     } catch (error) {
