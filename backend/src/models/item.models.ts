@@ -2,36 +2,7 @@ import { Item } from "../types/item.types";
 import { v4 as uuidv4 } from "uuid";
 
 class ItemModel {
-  private items: Item[] = [
-    {
-      id: "string",
-      name: "tomato",
-      neededFor: ["curry", "pasta"],
-      isFood: true,
-      isCompleted: false,
-    },
-    {
-      id: "string2",
-      name: "carrot",
-      neededFor: ["curry"],
-      isFood: true,
-      isCompleted: false,
-    },
-    {
-      id: "string3",
-      name: "toilet paper",
-      neededFor: [],
-      isFood: false,
-      isCompleted: false,
-    },
-    {
-      id: "string4",
-      name: "spagettie",
-      neededFor: ["pasta"],
-      isFood: true,
-      isCompleted: false,
-    },
-  ];
+  private items: Item[] = [];
 
   getAll() {
     return this.items;
