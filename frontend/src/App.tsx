@@ -1,36 +1,12 @@
 
-import { useEffect, useState } from 'react'
 import './App.css'
 import { AuthPage } from './features/users/components'
 import { Header, Loading } from './components/layouts'
 import { Container } from './features/shoppingList'
+import { useAuth } from './hooks/useAuth'
 
 function App() {
-  const [username, setUsername] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-
-  useEffect(() => {
-    const authCheck = async () => {
-      try {
-
-        setIsLoading(true)
-        const res = await fetch("http://localhost:3000/user/checkAuth", {
-          credentials: "include"
-        })
-        if (!res.ok) {
-          setUsername(null)
-          return
-        }
-        const data = await res.json()
-        setUsername(data)
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    authCheck()
-  }, [])
+  const { username, isLoading } = useAuth()
 
   if (isLoading) {
     return <Loading />
