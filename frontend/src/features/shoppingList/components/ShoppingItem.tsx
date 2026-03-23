@@ -30,6 +30,25 @@ export const ShoppingItem = (props: Props) => {
     setAnchorEl(null)
   }
 
+  const handleDelete = async () => {
+    if (!confirm(`Are you sure to delete ${item.name} ?`)) return;
+    try {
+      const res = await fetch(`http://localhost:3000/item/${item.id}`, {
+        method: "DELETE"
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        alert(data.error)
+      }
+      window.location.href = "/"
+      alert(`You successfully deleted ${item.name}`)
+      return
+    } catch (error) {
+      console.error(error)
+    }
+
+  }
+
   return (
     <article
       className={`flex w-full items-center justify-between gap-3 rounded-2xl border px-3 py-3 transition sm:px-4 ${item.isCompleted
@@ -104,6 +123,7 @@ export const ShoppingItem = (props: Props) => {
           </button>
           <button
             type="button"
+            onClick={handleDelete}
             className={`rounded-xl p-2 transition ${item.isCompleted
               ? 'hover:bg-slate-300 hover:text-slate-500'
               : 'hover:bg-rose-50 hover:text-rose-600'
