@@ -12,8 +12,11 @@ export const Container = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
   const [updatingItem, setUpdatingItem] = useState<ShoppingItemType | undefined>(undefined)
   const [shoppingList, setShoppingList] = useState<ShoppingItemType[]>([])
+  const [allShoppingList, setAllShoppingList] = useState<ShoppingItemType[]>([])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setAllShoppingList(shoppingItems)
     setShoppingList(filteredShoppingItems)
   }, [filteredShoppingItems])
 
@@ -24,7 +27,7 @@ export const Container = () => {
 
   return (
     <main>
-      <FunctionButtons shoppingItems={shoppingItems} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} setIsAddModalOpen={setIsAddModalOpen} />
+      <FunctionButtons shoppingItems={allShoppingList} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} setIsAddModalOpen={setIsAddModalOpen} />
       <ShoppingList shoppingItems={shoppingList} selectedMenu={selectedMenu} openUpdateModal={openUpdateModal} setShoppingList={setShoppingList} />
 
       {isAddModalOpen && <InputModal crud="add" onClose={setIsAddModalOpen} shoppingList={shoppingList} setShoppingList={setShoppingList} />}
