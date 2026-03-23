@@ -6,14 +6,14 @@ import { SelectBox } from '../../../components';
 import type { ShoppingItemType } from '../../../types/shoppingItem.types';
 
 type Props = {
-  dummyData: ShoppingItemType[]
+  shoppingItems: ShoppingItemType[]
   selectedMenu: string,
   setSelectedMenu: React.Dispatch<React.SetStateAction<string>>
   setIsAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const FunctionButtons = (props: Props) => {
-  const { dummyData, selectedMenu, setSelectedMenu, setIsAddModalOpen } = props
+  const { shoppingItems, selectedMenu, setSelectedMenu, setIsAddModalOpen } = props
 
 
   return (
@@ -65,7 +65,7 @@ export const FunctionButtons = (props: Props) => {
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-slate-50 px-2 py-1 sm:ml-1">
-            <SelectBox dummyData={dummyData} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+            <SelectBox shoppingItems={shoppingItems} selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
           </div>
         </div>
       </div>

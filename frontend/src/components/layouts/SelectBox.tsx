@@ -3,16 +3,16 @@ import React from 'react'
 import type { ShoppingItemType } from '../../types/shoppingItem.types'
 
 type Props = {
-  dummyData: ShoppingItemType[]
+  shoppingItems: ShoppingItemType[]
   selectedMenu: string,
   setSelectedMenu: React.Dispatch<React.SetStateAction<string>>
 }
 
 export const SelectBox = (props: Props) => {
-  const { dummyData, selectedMenu, setSelectedMenu } = props;
+  const { shoppingItems, selectedMenu, setSelectedMenu } = props;
   const menuList: string[] = []
 
-  dummyData.forEach(element => {
+  shoppingItems.forEach(element => {
     if (!element.isFood) return
     if (element.neededFor.length === 1) {
       return menuList.push(element.neededFor[0])
