@@ -14,8 +14,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_models_1 = __importDefault(require("../models/user.models"));
 const getAllUsers = (req, res) => {
-    const user = user_models_1.default.getAllUsers();
-    res.status(200).json(user);
+    const users = user_models_1.default.getAllUsers();
+    if (!users) {
+        res.status(400).json({ error: "Users are not found" });
+        return;
+    }
+    res.status(200).json(users);
 };
 const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;

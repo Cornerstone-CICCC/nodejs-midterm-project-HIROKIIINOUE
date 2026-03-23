@@ -3,8 +3,12 @@ import userModels from "../models/user.models";
 import { User } from "../types/user.types";
 
 const getAllUsers = (req: Request, res: Response) => {
-  const user = userModels.getAllUsers();
-  res.status(200).json(user);
+  const users = userModels.getAllUsers();
+  if (!users) {
+    res.status(400).json({ error: "Users are not found" });
+    return;
+  }
+  res.status(200).json(users);
 };
 
 const addUser = async (

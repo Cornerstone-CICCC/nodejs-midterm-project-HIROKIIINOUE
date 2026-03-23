@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/user.route";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import itemRouter from "./routes/item.route";
 dotenv.config();
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/user", userRouter);
+app.use("/item", itemRouter);
 
 app.get("/", (req, res) => {
   res.status(200).send("Welcome");
