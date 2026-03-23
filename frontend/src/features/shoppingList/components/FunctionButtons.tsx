@@ -15,6 +15,23 @@ type Props = {
 export const FunctionButtons = (props: Props) => {
   const { shoppingItems, selectedMenu, setSelectedMenu, setIsAddModalOpen } = props
 
+  const handleAllClear = async () => {
+    if (!confirm("Are you sure to delete all items?")) return;
+    try {
+      const res = await fetch("http://localhost:3000/item", {
+        method: "DELETE"
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        alert(data.error)
+      }
+      window.location.href = "/"
+      alert(data.message)
+      return
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <section className="px-4 py-4 sm:px-6">
@@ -44,6 +61,7 @@ export const FunctionButtons = (props: Props) => {
             </Button>
             <Button
               variant="contained"
+              onClick={handleAllClear}
               endIcon={<DeleteSweepIcon />}
               sx={{
                 borderRadius: '16px',
